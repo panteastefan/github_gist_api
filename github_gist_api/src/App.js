@@ -4,16 +4,9 @@ import GitHubSearch from "./components/GitHubSearch";
 import CardComponent from "./components/CardComponent";
 
 function App() {
-  const [name, setName] = useState("");
-  const [user_name, setUsername] = useState("");
-  const [gists_url, setGists] = useState("");
-  const [avatar, setAvatar] = useState("");
-  const [followers, setFollowers] = useState("");
-  const [repos, setRepos] = useState("");
-  const [public_repos, setPublicRepos] = useState("");
-  const [public_gists, setPublicGists] = useState("");
   const [user_input, setUserInput] = useState("");
 
+  const [user_git, setUserGit] = useState([]);
   const [gists_array, setGistsArray] = useState([]);
   const [gist_forks, setGistForks] = useState({});
 
@@ -25,7 +18,7 @@ function App() {
     fetch(`https://api.github.com/users/${user_input}`)
       .then((res) => res.json())
       .then((data) => {
-        setData(data);
+        setUserGit(data);
       });
 
     fetch(`https://api.github.com/users/${user_input}/gists`)
@@ -45,38 +38,11 @@ function App() {
       });
   };
 
-  const setData = ({
-    name,
-    login,
-    gists_url,
-    avatar_url,
-    followers,
-    repos,
-    public_repos,
-    public_gists,
-  }) => {
-    setName(name);
-    setUsername(login);
-    setGists(gists_url);
-    setAvatar(avatar_url);
-    setFollowers(followers);
-    setRepos(repos);
-    setPublicRepos(public_repos);
-    setPublicGists(public_gists);
-  };
-
   return (
     <div className="App">
       <GitHubSearch handleSearch={handleSearch} handleSubmit={handleSubmit} />
       <CardComponent
-        avatar={avatar}
-        name={name}
-        gists_url={gists_url}
-        user_name={user_name}
-        followers={followers}
-        repos={repos}
-        public_repos={public_repos}
-        public_gists={public_gists}
+        user_git={user_git}
         gists_array={gists_array}
         gist_forks={gist_forks}
       />

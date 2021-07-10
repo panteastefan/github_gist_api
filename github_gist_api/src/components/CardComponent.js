@@ -38,25 +38,25 @@ class CardComponent extends Component {
     return (
       <div className="card">
         <Card>
-          <Image src={this.props.avatar} wrapped ui={false} />
+          <Image src={this.user_git.props.avatar} wrapped ui={false} />
           <Card.Content>
-            <Card.Header>{this.props.name}</Card.Header>
-            <Card.Header>{this.props.user_name}</Card.Header>
+            <Card.Header>{this.user_git.props.name}</Card.Header>
+            <Card.Header>{this.user_git.props.user_name}</Card.Header>
           </Card.Content>
 
           <Card.Content extra>
             <a>
               <Icon name="user" />
-              {this.props.followers} Followers
+              {this.props.user_git.followers} Followers
             </a>
           </Card.Content>
 
           <Card.Content extra>
-            <a>{this.props.public_repos} Repos</a>
+            <a>{this.props.user_git.public_repos} Repos</a>
           </Card.Content>
 
           <Card.Content extra>
-            <a>{this.props.public_gists} Gists</a>
+            <a>{this.props.user_git.public_gists} Gists</a>
           </Card.Content>
 
           <Card.Content>
