@@ -1,62 +1,87 @@
 import React, { Component } from "react";
-import './CardComponent.css';
-import { Card, Image, Icon } from 'semantic-ui-react'
-import { Badge } from 'reactstrap';
+import "./CardComponent.css";
+import { Card, Image, Icon } from "semantic-ui-react";
+import { Badge } from "reactstrap";
 
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
-
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 
 class CardComponent extends Component {
-    render(){
-        return <div className='card'>
-            <Card>
-                <Image src={this.props.avatar} wrapped ui={false}/>
-                <Card.Content>
-                    <Card.Header>{this.props.name}</Card.Header>
-                    <Card.Header>{this.props.user_name}</Card.Header>
-                </Card.Content>
-                
-                <Card.Content extra>
-                <a>
-                    <Icon name='user' />
-                    {this.props.followers} Followers
-                </a>
-                </Card.Content>
-                
-                <Card.Content extra>
-                <a>
-                    {this.props.public_repos} Repos
-                </a>
-                </Card.Content>
+  getBadgesFromGist(gist) {
+    const properties = Object.getOwnPropertyNames(gist.files);
+    const fileTypes = [];
+    properties.forEach((property) => {
+      fileTypes.push(gist.files[property]?.language);
+    });
+    return fileTypes;
+  }
 
-                <Card.Content extra>
-                <a>
-                    {this.props.public_gists} Gists
-                </a>
-                </Card.Content>
+  getRawURLFromGist(gist) {
+    const properties = Object.getOwnPropertyNames(gist.files);
+    const a = gist.files[properties[0]]?.raw_url;
+    console.log(a);
+    return a;
+  }
+  render() {
+    return (
+      <div className="card">
+        <Card>
+          <Image src={this.props.avatar} wrapped ui={false} />
+          <Card.Content>
+            <Card.Header>{this.props.name}</Card.Header>
+            <Card.Header>{this.props.user_name}</Card.Header>
+          </Card.Content>
 
-                <Card.Content>
-                <h3> Public Gists </h3>
-                    <Card.Content>
+          <Card.Content extra>
+            <a>
+              <Icon name="user" />
+              {this.props.followers} Followers
+            </a>
+          </Card.Content>
+
+          <Card.Content extra>
+            <a>{this.props.public_repos} Repos</a>
+          </Card.Content>
+
+          <Card.Content extra>
+            <a>{this.props.public_gists} Gists</a>
+          </Card.Content>
+
+          <Card.Content>
+            <h3> Public Gists </h3>
+            <Card.Content>
+              <div>
+                {this.props.gists_array.map((gist, index) => (
+                  <li>
+                    <a href={this.getRawURLFromGist(gist)} target="_blank">
+                      <Popup trigger={<a> {gist.description} </a>}>
                         <div>
-                            {this.props.description.map((descr, index) => (
-                            <li>
-                                <Popup trigger={<a> {descr}</a>}><div>Popup content here !!</div></Popup>
-                                 <br/>
-                                <Badge color="secondary">{this.props.badges[index]}</Badge> <br/>
-                            </li>
-                            ))}
-
-                            {/* {this.props.description.map(description => (
-                                <li>{description}</li>
-                            ))} */}
+                          <iframe
+                            className="iframe"
+                            title={gist.description}
+                            src={this.getRawURLFromGist(gist)}
+                          ></iframe>
                         </div>
-                    </Card.Content>
-                </Card.Content>
+                      </Popup>
+                    </a>
+                    <br />
 
-            </Card>
-        </div>
-    }
+                    {this.getBadgesFromGist(gist).map((language) => {
+                      return (
+                        <div className="badge">
+                          <p className="badge-text">{language}</p>
+                        </div>
+                      );
+                    })}
+                    <br />
+                  </li>
+                ))}
+              </div>
+            </Card.Content>
+          </Card.Content>
+        </Card>
+      </div>
+    );
+  }
 }
 export default CardComponent;
