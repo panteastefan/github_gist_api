@@ -15,6 +15,11 @@ function App() {
   const [public_gists, setPublicGists] = useState('');
   const [user_input, setUserInput] = useState('');
 
+  const [gists_array, setGistsArray] = useState([]);
+  const [description, setDescription] = useState([]);
+  const [url, setUrls] = useState([]);
+  const [forks_url, setForksUrl] = useState([]);
+
   const handleSearch = (e) => {
     setUserInput(e.target.value)
   }
@@ -23,18 +28,28 @@ function App() {
     fetch(`https://api.github.com/users/${user_input}`)
       .then(res => res.json())
       .then(data => {
-        setData(data);
+        setData(data)
+      })
+    
+    fetch(`https://api.github.com/users/${user_input}/gists`)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        setGistsArray(data);
+
+        let descriptions = []
+
+        for (const {url: u, description: d, forks_url: f} of data){
+          
+          descriptions.push(d)
+          // setUrls(url => [...url, u]);
+          // setDescription(description => [...description, d]);
+          // setForksUrl(forks_url => [...forks_url, f]);
+        }
+        setDescription(descriptions)
       })
   }
 
-  useEffect(() => {
-    fetch('https://api.github.com/users/example')
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        setData(data)
-      });
-  }, []);
 
   const setData = ({name, login, gists_url, avatar_url, followers, repos,
                     public_repos, public_gists}) => {
@@ -54,7 +69,8 @@ function App() {
       <GitHubSearch handleSearch={handleSearch} handleSubmit={handleSubmit}/>
       <CardComponent avatar={avatar} name={name} gists_url={gists_url} user_name={user_name}
                      followers={followers} repos={repos} public_repos={public_repos}
-                     public_gists={public_gists}/>
+                     public_gists={public_gists} url={url} description={description}
+                     forks_url={forks_url} gists_array={gists_array}/>
     </div>
   );
 }

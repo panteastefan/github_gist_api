@@ -11,12 +11,6 @@ class CardComponent extends Component {
                     <Card.Header>{this.props.name}</Card.Header>
                     <Card.Header>{this.props.user_name}</Card.Header>
                 </Card.Content>
-
-                <Card.Content extra>
-                <a>
-                    {this.props.gists_url}
-                </a>
-                </Card.Content>
                 
                 <Card.Content extra>
                 <a>
@@ -36,6 +30,16 @@ class CardComponent extends Component {
                     {this.props.public_gists} Gists
                 </a>
                 </Card.Content>
+
+                <Card.Content>
+                <h3> Public Gists </h3>
+                    <Card.Content>
+                        {this.props.description.map(description => (
+                            <li>{description}</li>
+                        ))}
+                    </Card.Content>
+                </Card.Content>
+
             </Card>
         </div>
     }
