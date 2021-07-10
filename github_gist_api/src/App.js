@@ -13,6 +13,19 @@ function App() {
   const [repos, setRepos] = useState('');
   const [public_repos, setPublicRepos] = useState('');
   const [public_gists, setPublicGists] = useState('');
+  const [user_input, setUserInput] = useState('');
+
+  const handleSearch = (e) => {
+    setUserInput(e.target.value)
+  }
+
+  const handleSubmit = () => {
+    fetch(`https://api.github.com/users/${user_input}`)
+      .then(res => res.json())
+      .then(data => {
+        setData(data);
+      })
+  }
 
   useEffect(() => {
     fetch('https://api.github.com/users/example')
@@ -38,7 +51,7 @@ function App() {
 
   return (
     <div className="App">
-      <GitHubSearch/>
+      <GitHubSearch handleSearch={handleSearch} handleSubmit={handleSubmit}/>
       <CardComponent avatar={avatar} name={name} gists_url={gists_url} user_name={user_name}
                      followers={followers} repos={repos} public_repos={public_repos}
                      public_gists={public_gists}/>

@@ -14,7 +14,6 @@ class CardComponent extends Component {
 
                 <Card.Content extra>
                 <a>
-                    <Icon name='user' />
                     {this.props.gists_url}
                 </a>
                 </Card.Content>
@@ -28,14 +27,12 @@ class CardComponent extends Component {
                 
                 <Card.Content extra>
                 <a>
-                    <Icon name='user' />
                     {this.props.public_repos} Repos
                 </a>
                 </Card.Content>
 
                 <Card.Content extra>
                 <a>
-                    <Icon name='user' />
                     {this.props.public_gists} Gists
                 </a>
                 </Card.Content>
