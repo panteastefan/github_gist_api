@@ -1,0 +1,13 @@
+.badge {
+  background-color: rgb(255, 162, 0);
+  border-radius: 5px;
+  display: inline-block;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.badge-text {
+  color: white;
+  padding-left: 7px;
+  padding-right: 7px;
+}

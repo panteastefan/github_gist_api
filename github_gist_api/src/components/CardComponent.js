@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./CardComponent.css";
+import Badge from "./Badge.js";
 import { Card, Image, Icon } from "semantic-ui-react";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
@@ -38,10 +39,10 @@ class CardComponent extends Component {
     return (
       <div className="card">
         <Card>
-          <Image src={this.user_git.props.avatar} wrapped ui={false} />
+          <Image src={this.props.user_git.avatar_url} wrapped ui={false} />
           <Card.Content>
-            <Card.Header>{this.user_git.props.name}</Card.Header>
-            <Card.Header>{this.user_git.props.user_name}</Card.Header>
+            <Card.Header>{this.props.user_git.name}</Card.Header>
+            <Card.Header>{this.props.user_git.user_name}</Card.Header>
           </Card.Content>
 
           <Card.Content extra>
@@ -78,11 +79,7 @@ class CardComponent extends Component {
                     </a>
 
                     {this.getBadgesFromGist(gist).map((language, index) => {
-                      return (
-                        <div key={index} className="badge">
-                          <p className="badge-text">{language}</p>
-                        </div>
-                      );
+                      return <Badge key={index} language={language} />;
                     })}
 
                     {this.getOwnersUsernameFromFork(
