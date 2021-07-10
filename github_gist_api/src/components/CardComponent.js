@@ -19,7 +19,6 @@ class CardComponent extends Component {
   getRawURLFromGist(gist) {
     const properties = Object.getOwnPropertyNames(gist.files);
     const a = gist.files[properties[0]]?.raw_url;
-    console.log(a);
     return a;
   }
   render() {
@@ -52,9 +51,9 @@ class CardComponent extends Component {
             <Card.Content>
               <div>
                 {this.props.gists_array.map((gist, index) => (
-                  <li>
+                  <li key={index}>
                     <a href={this.getRawURLFromGist(gist)} target="_blank">
-                      <Popup trigger={<a> {gist.description} </a>}>
+                      <Popup trigger={<p> {gist.description} </p>}>
                         <div>
                           <iframe
                             className="iframe"
@@ -66,9 +65,9 @@ class CardComponent extends Component {
                     </a>
                     <br />
 
-                    {this.getBadgesFromGist(gist).map((language) => {
+                    {this.getBadgesFromGist(gist).map((language, index) => {
                       return (
-                        <div className="badge">
+                        <div key={index} className="badge">
                           <p className="badge-text">{language}</p>
                         </div>
                       );

@@ -15,18 +15,9 @@ function App() {
   const [user_input, setUserInput] = useState("");
 
   const [gists_array, setGistsArray] = useState([]);
-  const [current_file_url, setCurrentFileURL] = useState([]);
 
   const handleSearch = (e) => {
     setUserInput(e.target.value);
-  };
-
-  const handleFile = () => {
-    fetch(`${current_file_url}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
   };
 
   const handleSubmit = () => {
@@ -41,6 +32,14 @@ function App() {
       .then((data) => {
         console.log(data);
         setGistsArray(data);
+
+        data.forEach((gist) => {
+          fetch(gist.forks_url)
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+            });
+        });
       });
   };
 
