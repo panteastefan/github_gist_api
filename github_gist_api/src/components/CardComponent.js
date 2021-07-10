@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import "./CardComponent.css";
 import { Card, Image, Icon } from "semantic-ui-react";
-import { Badge } from "reactstrap";
-
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 
@@ -21,6 +19,21 @@ class CardComponent extends Component {
     const a = gist.files[properties[0]]?.raw_url;
     return a;
   }
+
+  getOwnersUsernameFromFork(forkDict, gistId) {
+    const forks = forkDict[gistId];
+    const forkOwnerList = [];
+    if (Array.isArray(forks)) {
+      if (forks.length > 0) {
+        const min_length = Math.min(forks.length, 3);
+        for (let i = 0; i < min_length; i++) {
+          forkOwnerList.push(forks[i].owner.login);
+        }
+      }
+    }
+    return forkOwnerList;
+  }
+
   render() {
     return (
       <div className="card">
@@ -51,7 +64,7 @@ class CardComponent extends Component {
             <Card.Content>
               <div>
                 {this.props.gists_array.map((gist, index) => (
-                  <li key={index}>
+                  <li>
                     <a href={this.getRawURLFromGist(gist)} target="_blank">
                       <Popup trigger={<p> {gist.description} </p>}>
                         <div>
@@ -63,7 +76,6 @@ class CardComponent extends Component {
                         </div>
                       </Popup>
                     </a>
-                    <br />
 
                     {this.getBadgesFromGist(gist).map((language, index) => {
                       return (
@@ -72,7 +84,17 @@ class CardComponent extends Component {
                         </div>
                       );
                     })}
-                    <br />
+
+                    {this.getOwnersUsernameFromFork(
+                      this.props.gist_forks,
+                      gist.id
+                    ).map((owner, index) => {
+                      return (
+                        <div key={index}>
+                          <p>{owner}</p>
+                        </div>
+                      );
+                    })}
                   </li>
                 ))}
               </div>

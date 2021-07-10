@@ -15,6 +15,7 @@ function App() {
   const [user_input, setUserInput] = useState("");
 
   const [gists_array, setGistsArray] = useState([]);
+  const [gist_forks, setGistForks] = useState({});
 
   const handleSearch = (e) => {
     setUserInput(e.target.value);
@@ -30,14 +31,15 @@ function App() {
     fetch(`https://api.github.com/users/${user_input}/gists`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setGistsArray(data);
 
         data.forEach((gist) => {
           fetch(gist.forks_url)
             .then((res) => res.json())
-            .then((data) => {
-              console.log(data);
+            .then((forks) => {
+              const gist_forks_copy = gist_forks;
+              gist_forks_copy[gist.id] = forks;
+              setGistForks(gist_forks_copy);
             });
         });
       });
@@ -76,6 +78,7 @@ function App() {
         public_repos={public_repos}
         public_gists={public_gists}
         gists_array={gists_array}
+        gist_forks={gist_forks}
       />
     </div>
   );
