@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import './CardComponent.css';
 import { Card, Image, Icon } from 'semantic-ui-react'
+import { Badge } from 'reactstrap';
+
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+
 
 class CardComponent extends Component {
     render(){
@@ -34,9 +39,19 @@ class CardComponent extends Component {
                 <Card.Content>
                 <h3> Public Gists </h3>
                     <Card.Content>
-                        {this.props.description.map(description => (
-                            <li>{description}</li>
-                        ))}
+                        <div>
+                            {this.props.description.map((descr, index) => (
+                            <li>
+                                <Popup trigger={<a> {descr}</a>}><div>Popup content here !!</div></Popup>
+                                 <br/>
+                                <Badge color="secondary">{this.props.badges[index]}</Badge> <br/>
+                            </li>
+                            ))}
+
+                            {/* {this.props.description.map(description => (
+                                <li>{description}</li>
+                            ))} */}
+                        </div>
                     </Card.Content>
                 </Card.Content>
 

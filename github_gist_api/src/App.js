@@ -17,6 +17,8 @@ function App() {
 
   const [gists_array, setGistsArray] = useState([]);
   const [description, setDescription] = useState([]);
+  const[files, setFiles] = useState([]);
+  const[badges, setBadges] = useState([]);
   const [url, setUrls] = useState([]);
   const [forks_url, setForksUrl] = useState([]);
 
@@ -38,15 +40,25 @@ function App() {
         setGistsArray(data);
 
         let descriptions = []
+        let badges_list = []
+        let files_url = []
 
-        for (const {url: u, description: d, forks_url: f} of data){
+        for (const {url: u, description: d, forks_url: f, files: t} of data){
           
           descriptions.push(d)
-          // setUrls(url => [...url, u]);
-          // setDescription(description => [...description, d]);
-          // setForksUrl(forks_url => [...forks_url, f]);
+          for (const [key, value] of Object.entries(t)) {
+            const arr = value['type'].split("/");
+            const badge = arr[arr.length - 1];
+
+            const file_url = value['raw_url'];
+
+            files_url.push(file_url);
+            badges_list.push(badge);
+          }
         }
         setDescription(descriptions)
+        setBadges(badges_list)
+        setFiles(files_url)
       })
   }
 
@@ -70,7 +82,8 @@ function App() {
       <CardComponent avatar={avatar} name={name} gists_url={gists_url} user_name={user_name}
                      followers={followers} repos={repos} public_repos={public_repos}
                      public_gists={public_gists} url={url} description={description}
-                     forks_url={forks_url} gists_array={gists_array}/>
+                     forks_url={forks_url} gists_array={gists_array} files={files}
+                     badges={badges}/>
     </div>
   );
 }
