@@ -1,10 +1,19 @@
 import { useSelector, useDispatch } from "react-redux";
 import { increment, decrement } from "../actions/index";
+import React, { useEffect, useState } from "react";
 
 function ReduxTest() {
   const counter = useSelector((state) => state.counter);
-  const isOdd = useSelector((state) => state.isOdd);
+  const [isOdd, setIsOdd] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (counter % 2 === 0) {
+      setIsOdd(false);
+    } else {
+      setIsOdd(true);
+    }
+  }, [counter]);
 
   return (
     <div>
