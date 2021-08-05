@@ -65,7 +65,7 @@ class CardComponent extends Component {
             <Card.Content>
               <div>
                 {this.props.gists_array.map((gist, index) => (
-                  <li>
+                  <li key={index}>
                     <a href={this.getRawURLFromGist(gist)} target="_blank">
                       <Popup trigger={<p> {gist.description} </p>}>
                         <div>
