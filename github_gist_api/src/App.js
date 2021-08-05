@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import GitHubSearch from "./components/GitHubSearch";
 import CardComponent from "./components/CardComponent";
+import ReduxTest from "./components/ReduxTest";
 
 function App() {
   const [user_input, setUserInput] = useState("");
@@ -46,6 +47,7 @@ function App() {
         gists_array={gists_array}
         gist_forks={gist_forks}
       />
+      <ReduxTest />
     </div>
   );
 }
